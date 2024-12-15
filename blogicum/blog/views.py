@@ -13,7 +13,7 @@ NUMBER_OF_PAGINATOR_PAGES = 10
 
 
 def get_posts(**kwargs):
-    """Отфильтрованное получение постов"""
+    """Получение постов в фильтре"""
     return Post.objects.select_related(
         'category',
         'location',
@@ -24,15 +24,13 @@ def get_posts(**kwargs):
 
 def get_paginator(request, queryset,
                   number_of_pages=NUMBER_OF_PAGINATOR_PAGES):
-    """Представление queryset в виде пагинатора,
-       по N-шт на странице"""
     paginator = Paginator(queryset, number_of_pages)
     page_number = request.GET.get('page')
     return paginator.get_page(page_number)
 
 
 def index(request):
-    """Главная страница / Лента публикаций"""
+    """Главная страница,  Лента публикаций"""
     posts = get_posts(
         is_published=True,
         category__is_published=True,
